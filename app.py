@@ -1,11 +1,26 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 
 app = Flask(__name__)
 
 
 @app.route("/", methods=["GET"])
 def home():
-    return jsonify({"message": "HOLA MUNDO"})
+    file = open("./spam_ham.txt", "r")
+    spam = file.read(3)
+    ham = file.read(3)
+    return jsonify({"spam": str(spam), "ham": str(ham)})
+
+
+@app.route("/prediccion", methods=["GET"])
+def prediction():
+    file = open("./prediction.txt", "r")
+    prediccion = file.read()
+    return jsonify({"prediction": str(prediccion)})
+
+
+@app.route("/send-file", methods=["GET"])
+def file():
+    return send_file("./correos.jpg", attachment_filename="correos.jpg")
 
 
 if __name__ == "__main__":
