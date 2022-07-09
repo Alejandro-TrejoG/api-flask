@@ -13,7 +13,7 @@ def home():
 
 @app.route("/prediccion", methods=["GET"])
 def prediction():
-    file = open("./prediction.txt", "r")
+    file = open("./accuracy.txt", "r")
     prediccion = file.read()
     return jsonify({"prediction": str(prediccion)})
 
