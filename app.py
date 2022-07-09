@@ -1,3 +1,4 @@
+from urllib import response
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 
@@ -10,19 +11,25 @@ def home():
     file = open("./spam_ham.txt", "r")
     spam = file.read(3)
     ham = file.read(3)
-    return jsonify({"spam": str(spam), "ham": str(ham)})
+    response = jsonify({"spam": str(spam), "ham": str(ham)})
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
 
 
 @app.route("/prediccion", methods=["GET"])
 def prediction():
     file = open("./accuracy.txt", "r")
     prediccion = file.read()
-    return jsonify({"prediction": str(prediccion)})
+    response = jsonify({"prediction": str(prediccion)})
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
 
 
 @app.route("/send-file", methods=["GET"])
 def file():
-    return send_file("./correos.jpg", attachment_filename="correos.jpg")
+    response = send_file("./correos.jpg", attachment_filename="correos.jpg")
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
 
 
 if __name__ == "__main__":
